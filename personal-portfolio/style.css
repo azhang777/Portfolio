@@ -1,0 +1,148 @@
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Open Sans", sans-serif;
+  font-weight: bold;
+  color: initial;
+}
+
+p {
+  font-size: 18px;
+  font-family: "Open Sans", sans-serif;
+  color: initial;
+}
+
+body {
+  color: #f0f0f0;
+}
+
+.design3d {
+  position: fixed;
+  left: 0;
+  z-index: -1; /* Place the canvas behind other content */
+}
+
+.container {
+  max-width: 1600px !important;
+}
+
+.navbar-nav {
+  display: flex;
+  flex-direction: row !important; /*prevents unordered list to being vertically stacked*/
+}
+
+.intro {
+  height: 700px;
+}
+.heading-title {
+  font-size: 7vw !important;
+  text-transform: uppercase;
+  text-shadow: 1px 2px 2px rgba(0, 0, 0, 0.4);
+}
+
+.description {
+  font-size: 2vw !important;
+}
+
+.card {
+  background-color: transparent;
+}
+.card-img-top {
+  max-width: 80px;
+  padding-top: 100px;
+  margin: auto;
+}
+
+.navbar {
+  height: 100px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.carousel {
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.c-item {
+  height: 700px;
+}
+
+.c-img {
+  height: 100%;
+  object-fit: cover;
+  border-radius: 20px;
+  user-select: none; /* Prevents the image from being selected */
+  pointer-events: none;
+}
+
+.btn {
+  width: 8rem;
+  height: 3rem;
+}
+
+.custom-margin {
+  margin-top: 180px;
+}
+
+.icon-text {
+  margin-right: 0.4rem;
+}
+
+.icon {
+  height: 1.4rem;
+}
+
+/* Media Query */
+@media (max-width: 1200px) {
+  .display-4 {
+    font-size: 1.1rem !important; /* Adjust the font size for smaller screens */
+  }
+
+  .c-item {
+    height: 500px;
+  }
+
+  .custom-margin {
+    margin-top: 80px;
+  }
+
+  .card-img-top {
+    max-width: 60px;
+    padding-top: 0px;
+  }
+}
+
+@media (max-width: 425px) {
+  .card-img-top {
+    max-width: 50px;
+    padding-top: 0px;
+  }
+
+  .card-body {
+    padding: 12px !important;
+  }
+}
+
+/*Animation*/
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}
+
+.intro,
+.skills,
+header {
+  opacity: 0.1;
+  animation: fadeIn 1.9s ease-in-out forwards;
+}
