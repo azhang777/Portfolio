@@ -6,19 +6,17 @@ h5,
 h6 {
   font-family: "Open Sans", sans-serif;
   font-weight: bold;
-  color: initial;
 }
 
 p {
   font-size: 18px;
   font-family: "Open Sans", sans-serif;
-  color: initial;
 }
 
-body {
-  color: #f0f0f0;
+.canvas {
+  touch-action: none; /* Disable touch events */
+  pointer-events: none; /* Disable pointer events */
 }
-
 .design3d {
   position: fixed;
   left: 0;
@@ -37,6 +35,7 @@ body {
 .intro {
   height: 700px;
 }
+
 .heading-title {
   font-size: 7vw !important;
   text-transform: uppercase;
@@ -50,6 +49,7 @@ body {
 .card {
   background-color: transparent;
 }
+
 .card-img-top {
   max-width: 80px;
   padding-top: 100px;
@@ -114,6 +114,10 @@ body {
     max-width: 60px;
     padding-top: 0px;
   }
+
+  .intro {
+    height: 700px;
+  }
 }
 
 @media (max-width: 425px) {
@@ -124,6 +128,10 @@ body {
 
   .card-body {
     padding: 12px !important;
+  }
+
+  .intro {
+    height: 600px;
   }
 }
 
@@ -144,5 +152,5 @@ body {
 .skills,
 header {
   opacity: 0.1;
-  animation: fadeIn 1.9s ease-in-out forwards;
+  animation: fadeIn 2s ease-in-out forwards;
 }

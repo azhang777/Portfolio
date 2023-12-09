@@ -1,7 +1,7 @@
 import "./style.css";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
-//import dat from "dat.gui";
+import dat from "dat.gui";
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0xffffff);
 const sizes = {
@@ -9,7 +9,7 @@ const sizes = {
   height: window.innerHeight,
 };
 const camera = new THREE.PerspectiveCamera(
-  60,
+  70,
   sizes.width / sizes.height,
   0.1,
   100
@@ -18,104 +18,155 @@ const camera = new THREE.PerspectiveCamera(
 const renderer = new THREE.WebGLRenderer({
   canvas: document.querySelector("#bg3d"),
 });
-// renderer.shadowMap.enabled = true;
-// renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-camera.position.set(42, -19, 0);
-const axesHelper = new THREE.AxesHelper(30, 10);
-const gridHelper = new THREE.GridHelper(30);
-scene.add(axesHelper);
-scene.add(gridHelper);
 
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(sizes.width, sizes.height);
 renderer.render(scene, camera);
 
 const geometry = new THREE.ConeGeometry(10, 27, 30);
-// const geometry2 = new THREE.SphereGeometry(8);
-// const geometry3 = new THREE.BoxGeometry(13, 13, 13);
-// const geometry4 = new THREE.PlaneGeometry(120, 120);
+const geometry2 = new THREE.SphereGeometry(8);
+const geometry3 = new THREE.BoxGeometry(13, 13, 13);
 const basicMaterial = new THREE.MeshStandardMaterial({
   color: 0xffffff,
   wireframe: true,
 });
 
 const cone = new THREE.Mesh(geometry, basicMaterial);
-// const sphere = new THREE.Mesh(geometry2, basicMaterial);
-// const box = new THREE.Mesh(geometry3, basicMaterial);
-// const plane = new THREE.Mesh(geometry4, planeMaterial);
-
-// plane.receiveShadow = true;
-// sphere.castShadow = true;
-cone.castShadow = true;
+const sphere = new THREE.Mesh(geometry2, basicMaterial);
+const box = new THREE.Mesh(geometry3, basicMaterial);
 
 scene.add(cone);
-// scene.add(sphere);
-// scene.add(box);
-//scene.add(plane);
+scene.add(sphere);
+scene.add(box);
 
 cone.rotation.x = 2.5;
-// sphere.rotation.x = 2.5;
-// box.rotation.x = 2.5;
-cone.position.set(0, 0, 0);
-// sphere.position.set(-20, 14, 15);
-// box.position.set(20, -14, -15);
-//plane.position.set(0, 0, -30);
+sphere.rotation.x = 2.5;
+box.rotation.x = 2.5;
+
+cone.position.set(-1, 0, 0);
+//sphere.position.set(-1, 0, 0);
+sphere.position.set(-28, 0, 1);
+//box.position.set(-1,0,0)
+box.position.set(28, -2, 1);
+camera.position.set(-6, 26, 48);
 
 const orbit = new OrbitControls(camera, renderer.domElement);
 orbit.update();
 
-// const gui = new dat.GUI();
+function isPlayground() {
+  return window.location.pathname.includes("test.html");
+}
 
-// const options = {
-//   color: "#d14d4d",
-//   wireframe: false,
-//   speed: 0.01,
-//   "plane z-position": 0,
-//   "plane x-position": 0,
-//   "plane x-rotation": 0,
-//   "plane y-rotation": 0,
-// };
+let gui;
 
-// gui.addColor(options, `color`).onChange(function (e) {
-//   sphere.material.color.set(e);
-// });
-// gui.add(options, "wireframe").onChange(function (e) {
-//   sphere.material.wireframe = e;
-// });
-// gui.add(options, "speed", 0, 0.1);
-// gui.add(options, "plane z-position", -100, 100).onChange(function (e) {
-//   plane.position.z = e;
-// });
-// gui.add(options, "plane x-position", -100, 100).onChange(function (e) {
-//   plane.position.x = e;
-// });
-// gui.add(options, "plane x-rotation", -5, 5).onChange(function (e) {
-//   plane.rotation.x = e;
-// });
-// gui.add(options, "plane y-rotation", -5, 5).onChange(function (e) {
-//   plane.rotation.y = e;
-// });
+if (isPlayground()) {
+  gui = new dat.GUI();
+}
 
-const directionalLight = new THREE.DirectionalLight(0xfcfcfc, 0.8);
-directionalLight.castShadow = true;
-directionalLight.position.set(80, 40, 89);
-scene.add(directionalLight);
+const options = {
+  color: "#d14d4d",
+  wireframe: false,
+  speed: 0.001,
+  cone: {
+    x: 0,
+    y: 0,
+    z: 0,
+  },
+  sphere: {
+    x: 0,
+    y: 0,
+    z: 0,
+  },
+  box: {
+    x: 0,
+    y: 0,
+    z: 0,
+  },
+};
 
-const dLightHelper = new THREE.DirectionalLightHelper(directionalLight, 5);
-scene.add(dLightHelper);
+if (gui) {
+  const axesHelper = new THREE.AxesHelper(30, 10);
+  const gridHelper = new THREE.GridHelper(30);
+  scene.add(axesHelper);
+  scene.add(gridHelper);
 
-// const dLightShadowHelper = new THREE.CameraHelper(
-//   directionalLight.shadow.camera
-// );
-// scene.add(dLightShadowHelper);
+  gui.addColor(options, `color`).onChange(function (e) {
+    sphere.material.color.set(e);
+  });
+  gui.add(options, "wireframe").onChange(function (e) {
+    sphere.material.wireframe = e;
+  });
+
+  const coneFolder = gui.addFolder("Cone Position");
+  const sphereFolder = gui.addFolder("Sphere Position");
+  const boxFolder = gui.addFolder("Box Position");
+
+  const maxValues = {
+    negative: -30,
+    positive: 30,
+  };
+  coneFolder
+    .add(options.cone, "x", maxValues.negative, maxValues.positive)
+    .onChange((value) => {
+      cone.position.x = value;
+    });
+  coneFolder
+    .add(options.cone, "y", maxValues.negative, maxValues.positive)
+    .onChange((value) => {
+      cone.position.y = value;
+    });
+  coneFolder
+    .add(options.cone, "z", maxValues.negative, maxValues.positive)
+    .onChange((value) => {
+      cone.position.z = value;
+    });
+
+  sphereFolder
+    .add(options.cone, "x", maxValues.negative, maxValues.positive)
+    .onChange((value) => {
+      sphere.position.x = value;
+    });
+  sphereFolder
+    .add(options.cone, "y", maxValues.negative, maxValues.positive)
+    .onChange((value) => {
+      sphere.position.y = value;
+    });
+  sphereFolder
+    .add(options.cone, "z", maxValues.negative, maxValues.positive)
+    .onChange((value) => {
+      sphere.position.z = value;
+    });
+
+  boxFolder
+    .add(options.cone, "x", maxValues.negative, maxValues.positive)
+    .onChange((value) => {
+      box.position.x = value;
+    });
+  boxFolder
+    .add(options.cone, "y", maxValues.negative, maxValues.positive)
+    .onChange((value) => {
+      box.position.y = value;
+    });
+  boxFolder
+    .add(options.cone, "z", maxValues.negative, maxValues.positive)
+    .onChange((value) => {
+      box.position.z = value;
+    });
+}
+
+// const directionalLight = new THREE.DirectionalLight(0xfcfcfc, 0.8);
+// directionalLight.castShadow = true;
+// directionalLight.position.set(80, 40, 89);
+// scene.add(directionalLight);
+
+// const dLightHelper = new THREE.DirectionalLightHelper(directionalLight, 5);
+// scene.add(dLightHelper);
 
 function animate() {
   requestAnimationFrame(animate);
-  cone.rotation.y -= 0.001;
-  //sphere.rotation.y += 0.001;
-  //step += options.speed;
-  //sphere.position.y = 10 * Math.abs(Math.sin(step));
-  //box.rotation.y += 0.001;
+  cone.rotation.y -= options.speed;
+  sphere.rotation.y += options.speed;
+  box.rotation.y += options.speed;
   renderer.render(scene, camera);
 }
 
@@ -140,4 +191,10 @@ window.addEventListener("resize", () => {
   camera.aspect = sizes.width / sizes.height; //reset the camera based on new sizes so it keeps it centered and proportional
   camera.updateProjectionMatrix();
   renderer.setSize(sizes.width, sizes.height); //resizes renderer to match the new
+});
+
+orbit.addEventListener("change", () => {
+  console.log(camera.position);
+  const coordinatesDiv = document.getElementById("coordinates");
+  coordinatesDiv.innerHTML = `<p>Camera Position X: ${camera.position.x}, Y: ${camera.position.y}, Z: ${camera.position.z}</p>`;
 });
