@@ -43,11 +43,11 @@ cone.rotation.x = 2.5;
 sphere.rotation.x = 2.5;
 box.rotation.x = 2.5;
 
-cone.position.set(-1, 0, 0);
+cone.position.set(-0, 0, 0);
 //sphere.position.set(-1, 0, 0);
 sphere.position.set(-28, 0, 1);
 //box.position.set(-1,0,0)
-box.position.set(28, -2, 1);
+box.position.set(32, -7, 1);
 camera.position.set(-6, 26, 48);
 
 const orbit = new OrbitControls(camera, renderer.domElement);
@@ -96,6 +96,7 @@ if (gui) {
   gui.add(options, "wireframe").onChange(function (e) {
     sphere.material.wireframe = e;
   });
+  gui.add(options, "speed", -0.5, 0.5);
 
   const coneFolder = gui.addFolder("Cone Position");
   const sphereFolder = gui.addFolder("Sphere Position");
@@ -154,19 +155,12 @@ if (gui) {
     });
 }
 
-// const directionalLight = new THREE.DirectionalLight(0xfcfcfc, 0.8);
-// directionalLight.castShadow = true;
-// directionalLight.position.set(80, 40, 89);
-// scene.add(directionalLight);
-
-// const dLightHelper = new THREE.DirectionalLightHelper(directionalLight, 5);
-// scene.add(dLightHelper);
-
 function animate() {
   requestAnimationFrame(animate);
   cone.rotation.y -= options.speed;
   sphere.rotation.y += options.speed;
   box.rotation.y += options.speed;
+  // console.log("dis a loop");
   renderer.render(scene, camera);
 }
 
@@ -193,6 +187,7 @@ window.addEventListener("resize", () => {
   renderer.setSize(sizes.width, sizes.height); //resizes renderer to match the new
 });
 
+//camera pos for test in playground
 orbit.addEventListener("change", () => {
   console.log(camera.position);
   const coordinatesDiv = document.getElementById("coordinates");
