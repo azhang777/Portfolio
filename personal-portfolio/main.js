@@ -25,7 +25,7 @@ renderer.render(scene, camera);
 
 const geometry = new THREE.ConeGeometry(10, 27, 30);
 const geometry2 = new THREE.SphereGeometry(8);
-const geometry3 = new THREE.BoxGeometry(13, 13, 13);
+const geometry3 = new THREE.BoxGeometry(16, 16, 16);
 const basicMaterial = new THREE.MeshStandardMaterial({
   color: 0xffffff,
   wireframe: true,
@@ -47,7 +47,7 @@ cone.position.set(-0, 0, 0);
 //sphere.position.set(-1, 0, 0);
 sphere.position.set(-28, 0, 1);
 //box.position.set(-1,0,0)
-box.position.set(32, -7, 1);
+box.position.set(34, -7, -1);
 camera.position.set(-6, 26, 48);
 
 const orbit = new OrbitControls(camera, renderer.domElement);
@@ -103,8 +103,8 @@ if (gui) {
   const boxFolder = gui.addFolder("Box Position");
 
   const maxValues = {
-    negative: -30,
-    positive: 30,
+    negative: -40,
+    positive: 40,
   };
   coneFolder
     .add(options.cone, "x", maxValues.negative, maxValues.positive)
@@ -168,7 +168,7 @@ animate();
 
 $(document).ready(function () {
   $("#project-carousel").carousel({
-    interval: 4000,
+    interval: 6000,
   });
 });
 
